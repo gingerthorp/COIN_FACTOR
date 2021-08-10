@@ -10,6 +10,7 @@ from ta.trend import MACD
 btc_table = pd.read_csv('../data/CRYPTO_15M_BTC.csv')
 
 indicator_macd = MACD(close=btc_table["nsClosePrice"], window_slow=26, window_fast=12, window_sign=9)
+btc_table['trend_macd'] = indicator_macd.macd()
 btc_table['trend_macd_signal'] = indicator_macd.macd_signal()
 btc_table['trend_macd_diff'] = indicator_macd.macd_diff()
 
@@ -26,8 +27,8 @@ btc_table['volatility_bbh'] = indicator_bb.bollinger_hband()
 btc_table['volatility_bbl'] = indicator_bb.bollinger_lband()
 btc_table['volatility_wid'] = indicator_bb.bollinger_hband() - indicator_bb.bollinger_lband()
 
-df = btc_table.loc[: 100,
-     ['nsMACD_SIGNAL', 'trend_macd_signal',
+df = btc_table.loc[:100 ,
+     ['nsYMD','nsMACD','trend_macd','nsMACD_SIGNAL', 'trend_macd_signal',
       'nsMACD_OSC', 'trend_macd_diff',
       'nsRSI', 'momentum_rsi',
       'nsSTO_K', 'momentum_stoch',
@@ -39,7 +40,7 @@ df = btc_table.loc[: 100,
 
 print(df.to_string())
 
-df.to_csv("../data/CRYPTO_15M_BTC_indicator_check.csv")
+# df.to_csv("../data/CRYPTO_15M_BTC_indicator_check.csv")
 
 # btc_table = add_all_ta_features(btc_table,
 #                                 open="nsOpenPrice", high="nsHighPrice", low="nsLowPrice", close="nsClosePrice", volume="nsTradeQty")
