@@ -7,7 +7,7 @@ from ta.momentum import StochasticOscillator
 
 from ta.trend import MACD
 
-btc_table = pd.read_csv('../data/CRYPTO_15M_BTC.csv')
+btc_table = pd.read_csv('../data/CRYPTO_DATA_15M_KAI(1000).csv')
 
 indicator_macd = MACD(close=btc_table["nsClosePrice"], window_slow=26, window_fast=12, window_sign=9)
 btc_table['trend_macd'] = indicator_macd.macd()

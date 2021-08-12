@@ -5,10 +5,9 @@ from datetime import date
 # basedate = datetime.datetime.strptime(base_date, '%Y%m%d')
 
 
-
-ret = date.fromisoformat('2021-06-29') + relativedelta(months=1) + timedelta(days=-1)
-
-rebal = ret + timedelta(days=-2)
+ret = date.fromisoformat('2021-01-29')
+ret_for = ret + relativedelta(months=1)
+ret_back = ret_for - relativedelta(months=1)
 
 print(ret)
-print(rebal)
+print(ret_back)
