@@ -1,2 +1,3 @@
 # Project exclude paths
 /venv/
+factor_check/FactorCheck.py

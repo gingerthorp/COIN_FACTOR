@@ -1,13 +1,17 @@
 import pandas as pd
-from ta import add_all_ta_features
-
 from ta.volatility import BollingerBands
 from ta.momentum import RSIIndicator
 from ta.momentum import StochasticOscillator
-
+from ta.trend import EMAIndicator
 from ta.trend import MACD
 
-btc_table = pd.read_csv('../data/CRYPTO_DATA_15M_KAI(1000).csv')
+btc_table = pd.read_csv('../data/CRYPTO_DATA_15M_BTC(1000)3.csv')
+
+indicator_12EMA = EMAIndicator(close=btc_table["nsClosePrice"], window=12, fillna=True)
+btc_table['12EMA'] = indicator_12EMA.ema_indicator()
+indicator_26EMA = EMAIndicator(close=btc_table["nsClosePrice"], window=26, fillna=True)
+btc_table['26EMA'] = indicator_26EMA.ema_indicator()
+
 
 indicator_macd = MACD(close=btc_table["nsClosePrice"], window_slow=26, window_fast=12, window_sign=9)
 btc_table['trend_macd'] = indicator_macd.macd()
@@ -29,6 +33,7 @@ btc_table['volatility_wid'] = indicator_bb.bollinger_hband() - indicator_bb.boll
 
 df = btc_table.loc[:100 ,
      ['nsYMD','nsMACD','trend_macd','nsMACD_SIGNAL', 'trend_macd_signal',
+      'nsEMA12','12EMA','nsEMA26','26EMA',
       'nsMACD_OSC', 'trend_macd_diff',
       'nsRSI', 'momentum_rsi',
       'nsSTO_K', 'momentum_stoch',
@@ -39,8 +44,3 @@ df = btc_table.loc[:100 ,
       ]]
 
 print(df.to_string())
-
-# df.to_csv("../data/CRYPTO_15M_BTC_indicator_check.csv")
-
-# btc_table = add_all_ta_features(btc_table,
-#                                 open="nsOpenPrice", high="nsHighPrice", low="nsLowPrice", close="nsClosePrice", volume="nsTradeQty")
